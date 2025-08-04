@@ -1,0 +1,13 @@
+(coq.theory
+  (name LogicalFoundations)
+  (modules 
+    Basics
+    Induction
+    Tactics
+    Relations
+    Propositions
+    Lists
+    Polymorphism
+    ProofObjects
+  )
+)
