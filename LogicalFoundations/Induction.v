@@ -55,12 +55,6 @@ Proof.
   - simpl. rewrite IHn, add_n_Sm. trivial.
 Qed.
 
-Lemma double_incr : forall n : N, double (S n) = S (S (double n)).
-Proof.
-  intro n. 
-  reflexivity.
-Qed. 
-
 Theorem add_rearrange: forall n m p q : N,
   (n + m) + (p + q) = (m + n) + (p + q).
 Proof.
@@ -81,4 +75,37 @@ Proof.
   intros n. induction n as [ | n IHn ]. 
   - reflexivity.
   - rewrite IHn. simpl. rewrite negb_involutive. trivial.
+Qed.
+
+(* Nat to Bin and Back to Nat *)
+
+Fixpoint bin_to_n (m: bin) : N :=
+  match m with
+  | Z => 0_
+  | B0 m_ => 2_ * bin_to_n m_
+  | B1 m_ => 1_ + 2_ * bin_to_n m_
+  end.
+
+Fixpoint incr (m: bin) : bin :=
+  match m with
+  | Z => B1 Z
+  | B0 m_ => B1 m_
+  | B1 m_ => B0 (incr m_)
+  end.
+
+Theorem bin_to_nat_pres_incr : forall b : bin,
+  bin_to_n (incr b) = 1_ + bin_to_n b.
+Proof.
+  intros b. induction b as [ | | b IHb ].
+  - reflexivity.
+  - reflexivity.
+  - simpl. rewrite IHb. simpl. rewrite <- add_n_Sm. reflexivity.
+Qed.
+
+(* Bin to Nat and Back to Bin *)
+
+Lemma double_incr : forall n : N, double (S n) = S (S (double n)).
+Proof.
+  intro n. 
+  reflexivity.
 Qed.

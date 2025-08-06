@@ -12,7 +12,7 @@ Inductive bin: Type :=
   | B0 (n : bin)
   | B1 (n : bin).
 
-  Fixpoint to_nat (n: N) : nat :=
+Fixpoint to_nat (n: N) : nat :=
   match n with
   | O => 0
   | S v_ => succ (to_nat v_)
